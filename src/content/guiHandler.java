@@ -9,11 +9,7 @@ import javax.swing.border.*;
 
 public class guiHandler extends MouseAdapter{
 	
-		// private static final int MIN_PEN_SIZE = 1;
-	    // private static final int MAX_PEN_SIZE = 30;
-	    // private static final int STARTING_PEN_SIZE = 30;
-	    
-	
+		// Pen settings 
 		private final Pen penManager;
 	    private final JSlider penSizeSlider;
 	    private JLabel penSizeLabel;
@@ -21,15 +17,13 @@ public class guiHandler extends MouseAdapter{
 		
 	    
 		private final DrawPanel pcenterPanel;
-		
-
-	    
-
-	    private final MyFrame frame;
 	    private final JPanel pEast;
 	    private final Set<ColorButton> bColors;
 	    private final JButton bDelete;
+	    
 	    private final MyMouseListener myListener;
+	    
+	    private final MyFrame frame;
 	    
 	    public guiHandler() {
 	    	
