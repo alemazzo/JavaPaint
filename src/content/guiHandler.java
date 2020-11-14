@@ -14,9 +14,9 @@ public class guiHandler extends MouseAdapter{
 	    // private static final int STARTING_PEN_SIZE = 30;
 	    
 	
-		private final Pen pen;
-	    private final JSlider penSize;
-	    private JLabel penSizeText;
+		private final Pen penManager;
+	    private final JSlider penSizeSlider;
+	    private JLabel penSizeLabel;
 		
 	    
 		private final DrawPanel pcenterPanel;
@@ -28,21 +28,20 @@ public class guiHandler extends MouseAdapter{
 	    private final JPanel pEast;
 	    private final Set<ColorButton> bColors;
 	    private final JButton bDelete;
-	    private Color currentColor = Color.BLACK;
 	    private final MyMouseListener myListener;
 	    
 	    public guiHandler() {
 	    	
 	    	
-	    	this.pen = new Pen();
+	    	this.penManager = new Pen();
 	    	
 	    	this.frame = new MyFrame("Java Paint",new BorderLayout());
 	    	
-	    	this.penSize = new JSlider(
+	    	this.penSizeSlider = new JSlider(
 	    			JSlider.HORIZONTAL, 
-	    			pen.getMinSize(), 
-	    			pen.getMaxSize(), 
-	    			pen.getSize()
+	    			penManager.getMinSize(), 
+	    			penManager.getMaxSize(), 
+	    			penManager.getSize()
 	    			); 
 	    	
 	    	this.pcenterPanel = new DrawPanel();
@@ -73,9 +72,9 @@ public class guiHandler extends MouseAdapter{
 	    private void buildSettingsPanel() {
 	    	this.addColorButtons();
 	    	this.addVerticalSpacing(this.pEast, 25);
-	    	this.pEast.add(this.penSizeText);
+	    	this.pEast.add(this.penSizeLabel);
 			this.addVerticalSpacing(this.pEast, 10);
-			this.pEast.add(this.penSize);
+			this.pEast.add(this.penSizeSlider);
 			this.addVerticalSpacing(this.pEast, 10);
 			this.pEast.add(this.selectColorText);
 			this.addVerticalSpacing(this.pEast, 10);
@@ -113,26 +112,31 @@ public class guiHandler extends MouseAdapter{
 	    }
 	    
 	    private void setPenSizeJSlider() {
-	    	this.penSize.setPaintTicks(true);
-	    	this.penSizeText = new JLabel("Select pen size");
-	    	this.penSize.setMajorTickSpacing(2);
+	    	this.penSizeSlider.setPaintTicks(true);
+	    	this.penSizeLabel = new JLabel("Select pen size");
+	    	this.penSizeSlider.setMajorTickSpacing(2);
 	    }
 	    
 	    public DrawPanel getpCenterPanel() {
 	    	return this.pcenterPanel;
 	    }
 	    
+	    
+	    // Pen Methods
+	    
 	    public void changeCurrentColor(Color c) {
-	    	this.currentColor = c;
+	    	this.penManager.setColor(c);
 	    }
 	    
 	    public Color getCurrentColor() {
-	    	return this.currentColor;
+	    	return this.penManager.getColor();
 	    }
 
 	    public int getPenSize() {
-	    	return this.penSize.getValue();
+	    	return this.penSizeSlider.getValue();
 	    }
+	    
+	    
 	    
 	    public void show(){
 			this.frame.setVisible(true);
