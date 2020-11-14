@@ -17,13 +17,14 @@ public class guiHandler extends MouseAdapter{
 		private final Pen penManager;
 	    private final JSlider penSizeSlider;
 	    private JLabel penSizeLabel;
+	    private final JLabel selectColorLabel;
 		
 	    
 		private final DrawPanel pcenterPanel;
 		
 
 	    
-	    private final JLabel selectColorText;
+
 	    private final MyFrame frame;
 	    private final JPanel pEast;
 	    private final Set<ColorButton> bColors;
@@ -58,7 +59,7 @@ public class guiHandler extends MouseAdapter{
 				}
 			});
 	    	
-	    	this.selectColorText = new JLabel("Select color");	
+	    	this.selectColorLabel = new JLabel("Select color");	
 	    	this.pEast.setLayout(new BoxLayout(this.pEast, BoxLayout.Y_AXIS) );
 	    	this.pEast.setBackground(Color.WHITE);
 	    	this.pEast.setBorder(new TitledBorder("Change settings here"));
@@ -76,7 +77,7 @@ public class guiHandler extends MouseAdapter{
 			this.addVerticalSpacing(this.pEast, 10);
 			this.pEast.add(this.penSizeSlider);
 			this.addVerticalSpacing(this.pEast, 10);
-			this.pEast.add(this.selectColorText);
+			this.pEast.add(this.selectColorLabel);
 			this.addVerticalSpacing(this.pEast, 10);
 			//Adding all buttons to pEast
 			for(ColorButton b : this.bColors) {
