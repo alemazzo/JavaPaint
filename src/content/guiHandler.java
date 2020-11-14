@@ -8,12 +8,21 @@ import javax.swing.*;
 import javax.swing.border.*;
 
 public class guiHandler extends MouseAdapter{
-	    private static final int MIN_PEN_SIZE = 1;
-	    private static final int MAX_PEN_SIZE = 30;
-	    private static final int STARTING_PEN_SIZE = 30;
-		private final DrawPanel pcenterPanel;
+	
+		// private static final int MIN_PEN_SIZE = 1;
+	    // private static final int MAX_PEN_SIZE = 30;
+	    // private static final int STARTING_PEN_SIZE = 30;
+	    
+	
+		private final Pen pen;
 	    private final JSlider penSize;
 	    private JLabel penSizeText;
+		
+	    
+		private final DrawPanel pcenterPanel;
+		
+
+	    
 	    private final JLabel selectColorText;
 	    private final MyFrame frame;
 	    private final JPanel pEast;
@@ -23,9 +32,21 @@ public class guiHandler extends MouseAdapter{
 	    private final MyMouseListener myListener;
 	    
 	    public guiHandler() {
-	    	this.frame = new MyFrame("Canvas Example",new BorderLayout());
-	    	this.penSize = new JSlider(JSlider.HORIZONTAL, MIN_PEN_SIZE, MAX_PEN_SIZE, STARTING_PEN_SIZE); 
+	    	
+	    	
+	    	this.pen = new Pen();
+	    	
+	    	this.frame = new MyFrame("Java Paint",new BorderLayout());
+	    	
+	    	this.penSize = new JSlider(
+	    			JSlider.HORIZONTAL, 
+	    			pen.getMinSize(), 
+	    			pen.getMaxSize(), 
+	    			pen.getSize()
+	    			); 
+	    	
 	    	this.pcenterPanel = new DrawPanel();
+	    	
 	    	this.bColors = new HashSet<>();
 	    	this.pEast = new JPanel();
 	    	this.myListener = new MyMouseListener(this);
