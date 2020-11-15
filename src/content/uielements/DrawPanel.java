@@ -1,13 +1,14 @@
 package content.uielements;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
 import content.AppState;
-import content.listeners.MyMouseListener;
 import content.structures.Pair;
 
 import java.util.*;
@@ -22,14 +23,31 @@ public class DrawPanel extends JPanel {
 	private Set<Map<Point, Pair<Color, Integer>>> lines; 
 	private Map<Point, Pair<Color, Integer>> circles;
 	
-	public DrawPanel(MainFrame mainFrame, MyMouseListener mouseListener, String title) {
+	public DrawPanel(MainFrame mainFrame, String title) {
 		
 		this.setBorder(new TitledBorder(title));
 		
 		this.mainFrame = mainFrame;
 		
-		this.addMouseListener(mouseListener);
-		this.addMouseMotionListener(mouseListener);
+
+		this.addMouseMotionListener(new MouseMotionListener() {
+			
+			public void repaint() {
+				DrawPanel.this.mainFrame.getDrawPanel().repaint();
+			}
+			
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				
+			}
+			
+			@Override
+			public void mouseDragged(MouseEvent e) {
+				DrawPanel.this.mainFrame.getDrawPanel().addPoint(e.getX(), e.getY());
+		    	this.repaint();
+				
+			}
+		});
 		
 		this.circles = new HashMap<>();
 		this.lines = new HashSet<>(); 
@@ -55,25 +73,13 @@ public class DrawPanel extends JPanel {
 	
 	
 	public void createLineObj() {
-		this.lines.add(this.circles);
-		this.circles = new HashMap<>();
-		this.lines.add(this.circles);
+		if (this.circles.size() != 0) {
+			this.lines.add(this.circles);
+			this.circles = new HashMap<>();
+		}
 	}
 	
 	public void addPoint(int x, int y){
-		/*
-		int lastSize = 1;
-		Color c1 = Color.BLACK;
-		for(Pair<Color, Integer> c : this.circles.values()) {
-			lastSize = c.second;
-			c1 = c.first;
-		}
-		
-		if(lastSize < 1) {
-			lastSize = 1;
-		}
-		*/
-		
 		this.circles.put(new Point(x-(AppState.pen.getSize()/2), y-(AppState.pen.getSize())/2), new Pair<Color, Integer>(AppState.pen.getColor(), AppState.pen.getSize()));
 	}
 	

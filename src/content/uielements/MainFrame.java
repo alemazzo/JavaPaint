@@ -8,7 +8,6 @@ import javax.swing.*;
 import javax.swing.border.*;
 
 import content.AppState;
-import content.listeners.*;
 import content.structures.*;
 import content.utils.*;
 
@@ -20,17 +19,14 @@ public class MainFrame extends MouseAdapter{
 	    // Main Panels
 		private final DrawPanel drawPanel;
 	    private final SettingsPanel settingsPanel;
-	    
-	    // Mouse Listener
-		private MyMouseListener myListener;
+
 		
 
 	    public MainFrame() {
 	    	
-	    	this.frame = new MyFrame("Java Paint", new BorderLayout());	    	
-	    	this.myListener = new MyMouseListener(this);
+	    	this.frame = new MyFrame("Java Paint", new BorderLayout());
 	    	
-	    	this.drawPanel = new DrawPanel(this, this.myListener, "Drawing Area");
+	    	this.drawPanel = new DrawPanel(this, "Drawing Area");
 	    	this.settingsPanel = new SettingsPanel(this, "Settings");    		    	
 	    	    	
 			this.setFrameView();	
