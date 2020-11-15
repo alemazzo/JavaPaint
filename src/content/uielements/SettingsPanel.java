@@ -97,6 +97,7 @@ public class SettingsPanel extends JPanel{
 		}	
 		
 		this.add(Box.createVerticalStrut(10));
+		this.add(this.deleteButton);
 		
 
 	}

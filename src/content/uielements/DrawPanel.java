@@ -12,6 +12,7 @@ import content.AppState;
 import content.structures.Pair;
 
 import java.util.*;
+import java.util.List;
 
 // Specializzazione ad-hoc per un JPanel
 public class DrawPanel extends JPanel {
@@ -20,8 +21,8 @@ public class DrawPanel extends JPanel {
 	
 	private MainFrame mainFrame;
 	
-	private Set<Map<Point, Pair<Color, Integer>>> lines; 
-	private Map<Point, Pair<Color, Integer>> circles;
+	private Set<List<Pair<Point, Pair<Color, Integer>>>> lines; 
+	private List<Pair<Point, Pair<Color, Integer>>> circles;
 	
 	public DrawPanel(MainFrame mainFrame, String title) {
 		
@@ -49,7 +50,7 @@ public class DrawPanel extends JPanel {
 			}
 		});
 		
-		this.circles = new HashMap<>();
+		this.circles = new ArrayList<>();
 		this.lines = new HashSet<>(); 
 		this.lines.add(this.circles);
 	}
@@ -59,28 +60,44 @@ public class DrawPanel extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		for (Map<Point, Pair<Color, Integer>> e : this.lines) {
-			for(Map.Entry<Point, Pair<Color, Integer>> c : e.entrySet()) {
-				g.setColor(c.getValue().first);
-				g.fillOval(c.getKey().x, c.getKey().y, c.getValue().second, c.getValue().second);
+		for (List<Pair<Point, Pair<Color, Integer>>> e : this.lines) {
+			Point last = null;
+			for(Pair<Point, Pair<Color, Integer>> c : e) {
+				g.setColor(c.second.getFirst());
+				g.fillOval(c.first.x, c.first.y, c.second.getSecond(), c.second.getSecond());
+				if (last != null) {
+					g.drawLine(
+							(int) last.getX() + (AppState.pen.getSize()/2), 
+							(int) last.getY() + (AppState.pen.getSize()/2), 
+							c.first.x + (AppState.pen.getSize()/2), 
+							c.first.y + (AppState.pen.getSize()/2)
+							);
+				}
+				last = new Point(c.first.x, c.first.y);
 			}
 		}
 	}
 	
 	public void deleteEverything() {
+		this.circles = new ArrayList<>();
 		this.lines = new HashSet<>();
+		this.lines.add(circles);
 	}
 	
 	
 	public void createLineObj() {
 		if (this.circles.size() != 0) {
 			this.lines.add(this.circles);
-			this.circles = new HashMap<>();
+			this.circles = new ArrayList<>();
 		}
 	}
 	
 	public void addPoint(int x, int y){
-		this.circles.put(new Point(x-(AppState.pen.getSize()/2), y-(AppState.pen.getSize())/2), new Pair<Color, Integer>(AppState.pen.getColor(), AppState.pen.getSize()));
+		Pair<Point, Pair<Color, Integer>> point = new Pair<>(
+				new Point(x-(AppState.pen.getSize()/2), y-(AppState.pen.getSize()/2)), 
+				new Pair<Color, Integer>(AppState.pen.getColor(), AppState.pen.getSize())
+				);
+		this.circles.add(point);
 	}
 	
 }
