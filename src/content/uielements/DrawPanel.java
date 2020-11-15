@@ -30,12 +30,41 @@ public class DrawPanel extends JPanel {
 		
 		this.mainFrame = mainFrame;
 		
+		this.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				DrawPanel.this.mainFrame.getDrawPanel().createLineObj();
+				DrawPanel.this.mainFrame.getDrawPanel().repaint();
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 
 		this.addMouseMotionListener(new MouseMotionListener() {
-			
-			public void repaint() {
-				DrawPanel.this.mainFrame.getDrawPanel().repaint();
-			}
 			
 			@Override
 			public void mouseMoved(MouseEvent e) {
@@ -45,7 +74,7 @@ public class DrawPanel extends JPanel {
 			@Override
 			public void mouseDragged(MouseEvent e) {
 				DrawPanel.this.mainFrame.getDrawPanel().addPoint(e.getX(), e.getY());
-		    	this.repaint();
+				DrawPanel.this.mainFrame.getDrawPanel().repaint();
 				
 			}
 		});
@@ -59,18 +88,17 @@ public class DrawPanel extends JPanel {
 	// override del metodo di disegno  
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
 		for (List<Pair<Point, Pair<Color, Integer>>> e : this.lines) {
 			Point last = null;
 			for(Pair<Point, Pair<Color, Integer>> c : e) {
-				g.setColor(c.second.getFirst());
-				g.fillOval(c.first.x, c.first.y, c.second.getSecond(), c.second.getSecond());
 				if (last != null) {
-					g.drawLine(
-							(int) last.getX() + (AppState.pen.getSize()/2), 
-							(int) last.getY() + (AppState.pen.getSize()/2), 
-							c.first.x + (AppState.pen.getSize()/2), 
-							c.first.y + (AppState.pen.getSize()/2)
+					Graphics2D g2d = (Graphics2D) g;
+					g2d.setStroke(new BasicStroke(c.second.getSecond()));
+					g2d.drawLine(
+							(int) last.getX() + (c.second.getSecond() / 2), 
+							(int) last.getY() + (c.second.getSecond() / 2), 
+							c.first.x + (c.second.getSecond() / 2), 
+							c.first.y + (c.second.getSecond() / 2)
 							);
 				}
 				last = new Point(c.first.x, c.first.y);
@@ -87,8 +115,9 @@ public class DrawPanel extends JPanel {
 	
 	public void createLineObj() {
 		if (this.circles.size() != 0) {
-			this.lines.add(this.circles);
+			// this.lines.add(new ArrayList<>(this.circles));
 			this.circles = new ArrayList<>();
+			this.lines.add(circles);
 		}
 	}
 	
