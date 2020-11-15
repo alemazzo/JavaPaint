@@ -30,6 +30,7 @@ public class DrawPanel extends JPanel {
 	
 	public DrawPanel(MainFrame mainFrame, String title) {
 		
+		
 		this.setBorder(new TitledBorder(title));
 		
 		this.mainFrame = mainFrame;
