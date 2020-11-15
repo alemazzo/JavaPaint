@@ -1,8 +1,11 @@
-package content;
+package content.uielements;
 
 import java.awt.*;
 
 import javax.swing.*;
+
+import content.structures.Pair;
+
 import java.util.*;
 
 // Specializzazione ad-hoc per un JPanel

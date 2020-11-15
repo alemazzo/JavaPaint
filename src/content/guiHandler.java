@@ -7,10 +7,15 @@ import java.util.Set;
 import javax.swing.*;
 import javax.swing.border.*;
 
+import content.uielements.*;
+import content.listeners.*;
+import content.structures.*;
+import content.utils.*;
+
 public class guiHandler extends MouseAdapter{
 	
 		// Pen settings 
-		private final Pen penManager;
+		private final Pen penManager = new Pen();
 	    private final JSlider penSizeSlider;
 	    private JLabel penSizeLabel;
 	    private final JLabel selectColorLabel;
@@ -18,6 +23,7 @@ public class guiHandler extends MouseAdapter{
 	    
 		private final DrawPanel pcenterPanel;
 	    private final JPanel pEast;
+	    
 	    private final Set<ColorButton> bColors;
 	    private final JButton bDelete;
 	    
@@ -27,10 +33,8 @@ public class guiHandler extends MouseAdapter{
 	    
 	    public guiHandler() {
 	    	
-	    	
-	    	this.penManager = new Pen();
-	    	
-	    	this.frame = new MyFrame("Java Paint",new BorderLayout());
+	    	this.frame = new MyFrame("Java Paint", new BorderLayout());
+	    	this.myListener = new MyMouseListener(this);
 	    	
 	    	this.penSizeSlider = new JSlider(
 	    			JSlider.HORIZONTAL, 
@@ -40,10 +44,9 @@ public class guiHandler extends MouseAdapter{
 	    			); 
 	    	
 	    	this.pcenterPanel = new DrawPanel();
-	    	
-	    	this.bColors = new HashSet<>();
 	    	this.pEast = new JPanel();
-	    	this.myListener = new MyMouseListener(this);
+	    	this.bColors = new HashSet<>();
+	    	
 	    	
 	    	this.bDelete = new JButton("Erase everything");
 	    	this.bDelete.addActionListener(new ActionListener() {		

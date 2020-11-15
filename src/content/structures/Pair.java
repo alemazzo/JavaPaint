@@ -1,4 +1,5 @@
-package content;
+package content.structures;
+
 public class Pair<X,Y>{
     
     public X first;

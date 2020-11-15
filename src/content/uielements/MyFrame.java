@@ -1,4 +1,4 @@
-package content;
+package content.uielements;
 
 import java.awt.*;
 import javax.swing.*;
