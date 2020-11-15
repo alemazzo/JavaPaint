@@ -1,9 +1,12 @@
 package content.uielements;
 
 import java.awt.*;
+import java.awt.event.MouseListener;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 
+import content.listeners.MyMouseListener;
 import content.structures.Pair;
 
 import java.util.*;
@@ -12,14 +15,26 @@ import java.util.*;
 public class DrawPanel extends JPanel {
 
 	private static final long serialVersionUID = 7114066347061701832L;
+	
+	private MainFrame mainFrame;
+	
 	private Set<Map<Point, Pair<Color, Integer>>> lines; 
 	private Map<Point, Pair<Color, Integer>> circles;
 	
-	public DrawPanel() {
+	public DrawPanel(MainFrame mainFrame, MyMouseListener mouseListener, String title) {
+		
+		this.setBorder(new TitledBorder(title));
+		
+		this.mainFrame = mainFrame;
+		
+		this.addMouseListener(mouseListener);
+		this.addMouseMotionListener(mouseListener);
+		
 		this.circles = new HashMap<>();
 		this.lines = new HashSet<>(); 
 		this.lines.add(this.circles);
 	}
+	
 
 	// override del metodo di disegno  
 	public void paintComponent(Graphics g) {

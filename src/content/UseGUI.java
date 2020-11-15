@@ -1,8 +1,10 @@
 package content;
 
+import content.uielements.MainFrame;
+
 public class UseGUI {
 	public static void main(String[] args){
-		final guiHandler handler = new guiHandler();
-		handler.show();
+		final MainFrame frame = new MainFrame();
+		frame.show();
 	}
 }

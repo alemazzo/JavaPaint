@@ -4,26 +4,26 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import content.guiHandler;
+import content.uielements.MainFrame;
 
 public class MyMouseListener implements MouseListener, MouseMotionListener{
 
-	private final guiHandler gui;
+	private final MainFrame gui;
 	
-	public MyMouseListener(guiHandler gui) {
+	public MyMouseListener(MainFrame gui) {
 		this.gui = gui;
 	}
 	
 	public void mouseDragged(MouseEvent e) { 	
-    	this.gui.getpCenterPanel().addPoint(e.getX(), e.getY());
-    	this.gui.getpCenterPanel().setPenSize(this.gui.getPenSize());
-    	this.gui.getpCenterPanel().setColor(this.gui.getCurrentColor());
-    	this.gui.getpCenterPanel().repaint();
+    	this.gui.getDrawPanel().addPoint(e.getX(), e.getY());
+    	this.gui.getDrawPanel().setPenSize(this.gui.getPenSize());
+    	this.gui.getDrawPanel().setColor(this.gui.getCurrentColor());
+    	this.gui.getDrawPanel().repaint();
     }
 	
 	public void mouseReleased(MouseEvent e) {
-    	this.gui.getpCenterPanel().createLineObj();
-    	this.gui.getpCenterPanel().repaint(); 
+    	this.gui.getDrawPanel().createLineObj();
+    	this.gui.getDrawPanel().repaint(); 
     }
 	
 	@Override

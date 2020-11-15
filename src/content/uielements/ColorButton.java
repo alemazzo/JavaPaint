@@ -7,7 +7,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 
-import content.guiHandler;
+import content.AppState;
 
 public class ColorButton extends JButton {
 	private static final long serialVersionUID = 1L;
@@ -15,7 +15,7 @@ public class ColorButton extends JButton {
 	private boolean isColored;
 	private int clickCount;
 	
-	public ColorButton(String name, Color c, guiHandler m) {
+	public ColorButton(String name, Color c, MainFrame m) {
 		super(name);
 		this.c = c;
 		this.isColored = false;
@@ -25,8 +25,8 @@ public class ColorButton extends JButton {
 		this.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {	
 				if(getClickCount() < 1) {
-					m.changeCurrentColor(getButtonColor());
-					m.getpCenterPanel().setColor(m.getCurrentColor());
+					AppState.pen.setColor(getButtonColor());
+					m.getDrawPanel().setColor(m.getCurrentColor());
 					ColorButton.this.increaseClickCount();
 					ColorButton.this.setBackground(ColorButton.this.getButtonColor());
 					ColorButton.this.colored(true);
@@ -34,7 +34,7 @@ public class ColorButton extends JButton {
 					ColorButton.this.resetClickCount();
 					ColorButton.this.colored(false);
 					m.changeCurrentColor(Color.BLACK);
-					m.getpCenterPanel().setColor(m.getCurrentColor());
+					m.getDrawPanel().setColor(m.getCurrentColor());
 				}
 				
 			}	

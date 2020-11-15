@@ -24,7 +24,7 @@ public class MyFrame extends JFrame{
 		// Il layout-manager può essere passato al costruttore di JPanel
 		this.jp = new JPanel(lm);
 		this.getContentPane().add(this.jp);
-		this.setResizable(false);
+		this.setResizable(true);
     	this.setSize(800, 800);
     	this.setVisible(true);
 	}
