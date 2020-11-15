@@ -38,8 +38,22 @@ public class DrawPanel extends JPanel {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				DrawPanel.this.mainFrame.getDrawPanel().createLineObj();
-				DrawPanel.this.mainFrame.getDrawPanel().repaint();
+				if (DrawPanel.this.selectedCircles != null) {
+					DrawPanel.this.translateSelectedCircle(e.getX(), e.getY());
+					for (Pair<Point, Pair<Color, Integer>> point : DrawPanel.this.selectedCircles) {
+						point.second.first = oldColor;
+					}
+					DrawPanel.this.repaint();
+					
+					DrawPanel.this.selectedCircles = null;
+					DrawPanel.this.selectedPoint = null;
+					DrawPanel.this.oldColor = null;
+					DrawPanel.this.repaint();
+				}{
+					DrawPanel.this.mainFrame.getDrawPanel().createLineObj();
+					DrawPanel.this.mainFrame.getDrawPanel().repaint();
+				}
+
 				
 			}
 			
@@ -72,17 +86,6 @@ public class DrawPanel extends JPanel {
 						point.second.first = Color.LIGHT_GRAY;
 					}
 					DrawPanel.this.repaint();
-				}else {
-					DrawPanel.this.translateSelectedCircle(e.getX(), e.getY());
-					for (Pair<Point, Pair<Color, Integer>> point : DrawPanel.this.selectedCircles) {
-						point.second.first = oldColor;
-					}
-					DrawPanel.this.repaint();
-					
-					DrawPanel.this.selectedCircles = null;
-					DrawPanel.this.selectedPoint = null;
-					DrawPanel.this.oldColor = null;
-					DrawPanel.this.repaint();
 				}
 				
 
@@ -95,13 +98,18 @@ public class DrawPanel extends JPanel {
 			
 			@Override
 			public void mouseMoved(MouseEvent e) {
-				
 			}
 			
 			@Override
 			public void mouseDragged(MouseEvent e) {
-				DrawPanel.this.mainFrame.getDrawPanel().addPoint(e.getX(), e.getY());
-				DrawPanel.this.mainFrame.getDrawPanel().repaint();
+				if (DrawPanel.this.selectedCircles != null) {
+					DrawPanel.this.translateSelectedCircle(e.getX(), e.getY());
+					DrawPanel.this.repaint();
+				}else {
+					DrawPanel.this.mainFrame.getDrawPanel().addPoint(e.getX(), e.getY());
+					DrawPanel.this.mainFrame.getDrawPanel().repaint();
+				}
+
 				
 			}
 		});
