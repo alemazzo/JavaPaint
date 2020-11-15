@@ -20,8 +20,9 @@ public class ColorButton extends JButton {
 		this.c = c;
 		this.isColored = false;
 		this.clickCount = 0;
-		this.setBackground(Color.LIGHT_GRAY);
+		this.setBackground(Color.WHITE);
 		
+		/*
 		this.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {	
 				if(getClickCount() < 1) {
@@ -51,6 +52,7 @@ public class ColorButton extends JButton {
 				  			
     		}
     	});
+		*/
 	}
 	
 	public void increaseClickCount() {
@@ -77,5 +79,12 @@ public class ColorButton extends JButton {
 		return this.c;
 	}
 	
+	public void setClicked() {
+		ColorButton.this.setBackground(Color.LIGHT_GRAY);
+	}
+	
+	public void setUnclicked() {
+		ColorButton.this.setBackground(Color.WHITE);
+	}
 		   
 }

@@ -93,7 +93,8 @@ public class DrawPanel extends JPanel {
 			for(Pair<Point, Pair<Color, Integer>> c : e) {
 				if (last != null) {
 					Graphics2D g2d = (Graphics2D) g;
-					g2d.setStroke(new BasicStroke(c.second.getSecond()));
+					g2d.setColor(c.second.getFirst());
+					g2d.setStroke(new BasicStroke(c.second.getSecond(), BasicStroke.CAP_ROUND, BasicStroke.CAP_SQUARE));
 					g2d.drawLine(
 							(int) last.getX() + (c.second.getSecond() / 2), 
 							(int) last.getY() + (c.second.getSecond() / 2), 
@@ -115,7 +116,6 @@ public class DrawPanel extends JPanel {
 	
 	public void createLineObj() {
 		if (this.circles.size() != 0) {
-			// this.lines.add(new ArrayList<>(this.circles));
 			this.circles = new ArrayList<>();
 			this.lines.add(circles);
 		}

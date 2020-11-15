@@ -3,8 +3,12 @@ package content.uielements;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.security.MessageDigest;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.swing.Box;
@@ -35,7 +39,7 @@ public class SettingsPanel extends JPanel{
     private JLabel penSizeLabel;
     private JLabel selectColorLabel;
     
-    private final Set<ColorButton> colorButtons = new HashSet<>();
+    private final List<ColorButton> colorButtons = new ArrayList<>();
     private final JButton deleteButton = new JButton("Erase everything");;
     	
 	
@@ -92,6 +96,32 @@ public class SettingsPanel extends JPanel{
 		
 		//Adding all buttons to pEast
 		for(ColorButton b : this.colorButtons) {
+			b.addMouseListener(new MouseListener() {
+				
+				@Override
+				public void mouseReleased(MouseEvent e) {}
+				
+				@Override
+				public void mousePressed(MouseEvent e) {}
+				
+				@Override
+				public void mouseExited(MouseEvent e){}
+				
+				@Override
+				public void mouseEntered(MouseEvent e) {}
+				
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					AppState.pen.setColor(b.getButtonColor());
+					for (ColorButton colorButton : colorButtons) {
+						b.setClicked();
+						if (colorButton != b) {
+							colorButton.setUnclicked();
+						}
+					}
+					
+				}
+			});
 			this.add(b);
 			this.add(Box.createVerticalStrut(5));
 		}	
@@ -104,11 +134,14 @@ public class SettingsPanel extends JPanel{
 	
 	
     private void setupColorButtons() {
+
+    	this.colorButtons.add(new ColorButton("BLACK", Color.BLACK, this.mainFrame));
     	this.colorButtons.add(new ColorButton("RED", Color.RED, this.mainFrame));
     	this.colorButtons.add(new ColorButton("GREEN", Color.GREEN, this.mainFrame));
     	this.colorButtons.add(new ColorButton("DARK_GRAY", Color.DARK_GRAY, this.mainFrame));
     	this.colorButtons.add(new ColorButton("YELLOW", Color.YELLOW, this.mainFrame));
-    	this.colorButtons.add(new ColorButton("BLACK", Color.BLACK, this.mainFrame));
+    	
+    	this.colorButtons.get(0).setClicked();
     }
 
     public int getPenValue() {
