@@ -21,6 +21,10 @@ public class DrawPanel extends JPanel {
 	
 	private MainFrame mainFrame;
 	
+	private List<Pair<Point, Pair<Color, Integer>>> selectedCircles;
+	private Pair<Point, Pair<Color, Integer>> selectedPoint;
+	private Color oldColor;
+	
 	private Set<List<Pair<Point, Pair<Color, Integer>>>> lines; 
 	private List<Pair<Point, Pair<Color, Integer>>> circles;
 	
@@ -61,6 +65,29 @@ public class DrawPanel extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
 				
+				if (DrawPanel.this.selectedCircles == null) {
+					DrawPanel.this.selectCircleByClick(e.getX(), e.getY());	
+					for (Pair<Point, Pair<Color, Integer>> point : DrawPanel.this.selectedCircles) {
+						oldColor = point.second.first;
+						point.second.first = Color.LIGHT_GRAY;
+					}
+					DrawPanel.this.repaint();
+				}else {
+					DrawPanel.this.translateSelectedCircle(e.getX(), e.getY());
+					for (Pair<Point, Pair<Color, Integer>> point : DrawPanel.this.selectedCircles) {
+						point.second.first = oldColor;
+					}
+					DrawPanel.this.repaint();
+					
+					DrawPanel.this.selectedCircles = null;
+					DrawPanel.this.selectedPoint = null;
+					DrawPanel.this.oldColor = null;
+					DrawPanel.this.repaint();
+				}
+				
+
+
+				
 			}
 		});
 
@@ -84,6 +111,9 @@ public class DrawPanel extends JPanel {
 		this.lines.add(this.circles);
 	}
 	
+
+
+
 
 	// override del metodo di disegno  
 	public void paintComponent(Graphics g) {
@@ -127,6 +157,34 @@ public class DrawPanel extends JPanel {
 				new Pair<Color, Integer>(AppState.pen.getColor(), AppState.pen.getSize())
 				);
 		this.circles.add(point);
+	}
+	
+	public void selectCircleByClick(final int x, final int y){
+		for (List<Pair<Point, Pair<Color, Integer>>> circle : this.lines) {
+			for (Pair<Point, Pair<Color, Integer>> point : circle) {
+				if (
+						Math.sqrt((point.first.x - x) * (point.first.x - x)) <= point.second.second && 
+						Math.sqrt((point.first.y - y) * (point.first.y - y)) <= point.second.second
+					) {
+					this.selectedCircles = circle;
+					this.selectedPoint = point;
+					return;
+				}
+			}
+		}
+		return;
+	}
+	
+	public void translateSelectedCircle(int x, int y) {
+		int diffX = x - (int) this.selectedPoint.first.getX();
+		int diffY = y - (int) this.selectedPoint.first.getY();
+		
+		for (Pair<Point, Pair<Color, Integer>> pair : selectedCircles) {
+			pair.first.x += diffX;
+			pair.first.y += diffY;
+		}		
+		
+		
 	}
 	
 }
