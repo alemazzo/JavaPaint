@@ -33,7 +33,6 @@ public class MainFrame extends MouseAdapter{
 	    	this.drawPanel = new DrawPanel(this, this.myListener, "Drawing Area");
 	    	this.settingsPanel = new SettingsPanel(this, "Settings");    		    	
 	    	    	
-
 			this.setFrameView();	
 		}
 
@@ -48,7 +47,6 @@ public class MainFrame extends MouseAdapter{
 	    	return this.drawPanel;
 	    }
 
-
 	    // Pen Methods
 	    
 	    public void changeCurrentColor(Color c) {
@@ -61,7 +59,7 @@ public class MainFrame extends MouseAdapter{
 
 	    
 	    public int getPenSize() {
-	    	return this.settingsPanel.getPenValue();
+	    	return AppState.pen.getSize();
 	    }
 	    
 	    

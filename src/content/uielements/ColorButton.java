@@ -26,7 +26,7 @@ public class ColorButton extends JButton {
 			public void actionPerformed(ActionEvent arg0) {	
 				if(getClickCount() < 1) {
 					AppState.pen.setColor(getButtonColor());
-					m.getDrawPanel().setColor(m.getCurrentColor());
+					AppState.pen.setColor(m.getCurrentColor());
 					ColorButton.this.increaseClickCount();
 					ColorButton.this.setBackground(ColorButton.this.getButtonColor());
 					ColorButton.this.colored(true);
@@ -34,7 +34,7 @@ public class ColorButton extends JButton {
 					ColorButton.this.resetClickCount();
 					ColorButton.this.colored(false);
 					m.changeCurrentColor(Color.BLACK);
-					m.getDrawPanel().setColor(m.getCurrentColor());
+					AppState.pen.setColor(m.getCurrentColor());
 				}
 				
 			}	

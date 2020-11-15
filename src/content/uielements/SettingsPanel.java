@@ -3,6 +3,7 @@ package content.uielements;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.security.MessageDigest;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,9 +11,12 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import content.AppState;
 
@@ -41,13 +45,8 @@ public class SettingsPanel extends JPanel{
     	this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS) );
     	this.setBackground(Color.WHITE);
     	this.setBorder(new TitledBorder(title));
-    	
 
-    	
-    	this.build();
-    	
-
-    
+    	this.build();  	
     	
 	}
 	
@@ -59,6 +58,15 @@ public class SettingsPanel extends JPanel{
     			AppState.pen.getMaxSize(), 
     			AppState.pen.getSize()
     			); 
+
+    	
+    	this.penSizeSlider.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				AppState.pen.setSize(SettingsPanel.this.penSizeSlider.getValue());
+			}
+			
+		});
     	
     	this.deleteButton.addActionListener(new ActionListener() {		
 			public void actionPerformed(ActionEvent arg0) {

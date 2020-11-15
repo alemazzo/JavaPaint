@@ -6,6 +6,7 @@ import java.awt.event.MouseListener;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
+import content.AppState;
 import content.listeners.MyMouseListener;
 import content.structures.Pair;
 
@@ -52,17 +53,6 @@ public class DrawPanel extends JPanel {
 		this.lines = new HashSet<>();
 	}
 	
-	public void setPenSize(int size) {	
-		for(Pair<Color, Integer> lastLine : this.circles.values()) {
-			lastLine.second = size;
-		}
-	}
-	
-	public void setColor(Color c) {
-		for(Pair<Color, Integer> pair : this.circles.values()) {
-			pair.first = c;
-		}
-	}
 	
 	public void createLineObj() {
 		this.lines.add(this.circles);
@@ -71,6 +61,7 @@ public class DrawPanel extends JPanel {
 	}
 	
 	public void addPoint(int x, int y){
+		/*
 		int lastSize = 1;
 		Color c1 = Color.BLACK;
 		for(Pair<Color, Integer> c : this.circles.values()) {
@@ -81,8 +72,9 @@ public class DrawPanel extends JPanel {
 		if(lastSize < 1) {
 			lastSize = 1;
 		}
+		*/
 		
-		this.circles.put(new Point(x-(lastSize/2), y-(lastSize)/2), new Pair<Color, Integer>(c1, lastSize));
+		this.circles.put(new Point(x-(AppState.pen.getSize()/2), y-(AppState.pen.getSize())/2), new Pair<Color, Integer>(AppState.pen.getColor(), AppState.pen.getSize()));
 	}
 	
 }
